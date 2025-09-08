@@ -1,3 +1,6 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -6,9 +9,15 @@ plugins {
     id("org.jetbrains.kotlin.kapt")
 }
 
+val apiKeyPropertiesfile = rootProject.file("apikey.properties")
+val apiKeysProperties = Properties()
+apiKeysProperties.load(FileInputStream(apiKeyPropertiesfile))
+
+
 android {
     namespace = "com.josecamilo.comicslibrary"
     compileSdk = 36
+    android.buildFeatures.buildConfig = true
 
     defaultConfig {
         applicationId = "com.josecamilo.comicslibrary"
@@ -18,6 +27,9 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "MARVEL_KEY", apiKeysProperties.getProperty("MARVEL_KEY"))
+        buildConfigField("String", "MARVEL_SECRET", apiKeysProperties.getProperty("MARVEL_PRIVATE_KEY"))
     }
 
     buildTypes {
