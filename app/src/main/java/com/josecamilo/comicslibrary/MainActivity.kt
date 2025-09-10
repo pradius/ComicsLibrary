@@ -18,6 +18,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.josecamilo.comicslibrary.ui.theme.ComicsLibraryTheme
 import com.josecamilo.comicslibrary.view.CharacterDetailScreen
+import com.josecamilo.comicslibrary.view.CharactersBottomNav
 import com.josecamilo.comicslibrary.view.CollectionScreen
 import com.josecamilo.comicslibrary.view.LibraryScreen
 
@@ -50,9 +51,8 @@ class MainActivity : ComponentActivity() {
 fun CharactersScaffold(navController: NavHostController) {
 
     Scaffold(
-        bottomBar = {}
+        bottomBar = { CharactersBottomNav(navController = navController) }
     ) { paddingValues ->
-        Text("Hello World", modifier = Modifier.padding(paddingValues))
         NavHost(navController, startDestination = Destination.Library.route) {
             composable(Destination.Library.route) {
                 LibraryScreen()
