@@ -21,6 +21,7 @@ import com.josecamilo.comicslibrary.view.CharacterDetailScreen
 import com.josecamilo.comicslibrary.view.CharactersBottomNav
 import com.josecamilo.comicslibrary.view.CollectionScreen
 import com.josecamilo.comicslibrary.view.LibraryScreen
+import dagger.hilt.android.AndroidEntryPoint
 
 sealed class Destination(val route: String) {
     object Library : Destination("library")
@@ -29,6 +30,8 @@ sealed class Destination(val route: String) {
         fun createRoute(characterId: Int?) = "character_detail/$characterId"
     }
 }
+
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
