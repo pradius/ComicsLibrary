@@ -4,7 +4,7 @@ package com.josecamilo.comicslibrary.model
      val code: String?,
      val status: String?,
      val attributionText: String?,
-     val charactersData: CharactersData
+     val data: CharactersData
  )
 
 data class CharactersData(

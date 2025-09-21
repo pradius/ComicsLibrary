@@ -30,7 +30,7 @@ class LibraryApiViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             queryInput.receiveAsFlow()
                 .filter { validateQuery(it) }
-                .debounce { 1000 }
+                .debounce(1000)
                 .collect {
                     repo.query(it)
                 }

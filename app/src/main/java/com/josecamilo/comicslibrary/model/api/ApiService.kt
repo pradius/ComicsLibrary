@@ -10,16 +10,18 @@ object ApiService {
     private const val BASE_URL = "https://gateway.marvel.com/v1/public/"
 
     private fun getRetrofit(): Retrofit {
-        val ts = System.currentTimeMillis()
         val apiSecret = BuildConfig.MARVEL_SECRET
         val apiKey = BuildConfig.MARVEL_KEY
-        val hash = getHash(ts.toString(), apiSecret, apiKey)
 
         val clientInterceptor = okhttp3.Interceptor { chain ->
             val original = chain.request()
 
+            // Generate timestamp and hash at request time, not object creation time
+            val ts = System.currentTimeMillis().toString()
+            val hash = getHash(ts, apiSecret, apiKey)
+
             val url = original.url.newBuilder()
-                .addQueryParameter("ts", ts.toString())
+                .addQueryParameter("ts", ts)
                 .addQueryParameter("apikey", apiKey)
                 .addQueryParameter("hash", hash)
                 .build()

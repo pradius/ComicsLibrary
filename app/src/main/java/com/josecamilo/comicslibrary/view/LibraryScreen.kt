@@ -94,10 +94,12 @@ fun ShowCharactersList(
     result: NetworkResult<CharactersApiResponse>,
     navController: NavHostController
 ) {
-    result.data?.charactersData?.results?.let { characters ->
+    result.data?.data?.results?.let { characters ->
 
         LazyColumn(
-            modifier = Modifier.background(Color.LightGray),
+            modifier = Modifier
+                .padding(top = 8.dp)
+                .background(Color.LightGray),
             verticalArrangement = Arrangement.Top
         ) {
             result.data.attributionText?.let {
