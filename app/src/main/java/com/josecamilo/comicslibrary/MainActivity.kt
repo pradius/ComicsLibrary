@@ -4,12 +4,11 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -21,6 +20,7 @@ import com.josecamilo.comicslibrary.view.CharacterDetailScreen
 import com.josecamilo.comicslibrary.view.CharactersBottomNav
 import com.josecamilo.comicslibrary.view.CollectionScreen
 import com.josecamilo.comicslibrary.view.LibraryScreen
+import com.josecamilo.comicslibrary.viewmodel.LibraryApiViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 sealed class Destination(val route: String) {
@@ -33,6 +33,9 @@ sealed class Destination(val route: String) {
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    private val libraryVM by viewModels<LibraryApiViewModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -43,7 +46,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     val navController = rememberNavController()
-                    CharactersScaffold(navController = navController)
+                    CharactersScaffold(navController = navController, libraryVM = libraryVM)
                 }
             }
         }
@@ -51,14 +54,21 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun CharactersScaffold(navController: NavHostController) {
+fun CharactersScaffold(
+    navController: NavHostController,
+    libraryVM: LibraryApiViewModel
+) {
 
     Scaffold(
         bottomBar = { CharactersBottomNav(navController = navController) }
     ) { paddingValues ->
         NavHost(navController, startDestination = Destination.Library.route) {
             composable(Destination.Library.route) {
-                LibraryScreen()
+                LibraryScreen(
+                    navController = navController,
+                    libraryVM = libraryVM,
+                    paddingValues = paddingValues
+                )
             }
             composable(Destination.Collection.route){
                 CollectionScreen()

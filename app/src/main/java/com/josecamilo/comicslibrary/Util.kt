@@ -1,5 +1,10 @@
 package com.josecamilo.comicslibrary
 
+import androidx.compose.foundation.layout.padding
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import coil.compose.AsyncImage
 import java.math.BigInteger
 import java.security.MessageDigest
 
