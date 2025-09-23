@@ -1,8 +1,8 @@
 package com.josecamilo.comicslibrary.model.db
 
-class CollectionsDbRepoImpl(
+class CollectionDbRepoImpl(
     private val characterDao: CharacterDao
-) : CollectionsDbRepo {
+) : CollectionDbRepo {
     override suspend fun getCharacters() = characterDao.getCharacters()
 
     override suspend fun getCharacterFromRepo(characterId: Int) =
